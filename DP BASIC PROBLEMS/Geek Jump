@@ -1,0 +1,47 @@
+import java.util.*;
+public class GeekJump{
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++)arr[i]=sc.nextInt();
+        int ans=minimumEnergy(arr,n);
+        System.out.println(ans);
+    }
+    // Memoization
+    public static  int minimumEnergy(int arr[],int N){
+        //code here
+        return fun(N-1,new int[N+1],arr);
+    }
+    public static int fun(int n,int[]dp,int[]arr){
+        if(n==0)return 0;
+        if(n<0)return 0;
+        
+        if(dp[n]!=0)return dp[n];
+        
+        int energy;
+        if(n==1){
+            energy=fun(n-1,dp,arr)+Math.abs(arr[n]-arr[n-1]);
+        }else{
+            int energy1=fun(n-1,dp,arr)+Math.abs(arr[n]-arr[n-1]);
+            int energy2=fun(n-2,dp,arr)+Math.abs(arr[n]-arr[n-2]);
+            energy=Math.min(energy1,energy2);
+        }
+        
+        dp[n]=energy;
+        return energy;
+    }
+
+    // Tabulation
+    public static int minimumEnergy(int[]arr,int n){
+        int dp[]=new int[n];
+        dp[0]=0;
+        for(int i=1;i<=n-1;i++){
+            int first=dp[i-1]+Math.abs(arr[i]-arr[i-1]);
+            int second=Integer.MAX_VALUE;
+            if(i>1)second=dp[i-2]+Math.abs(arr[i]-arr[i-2]);
+            dp[i]=Math.min(first,second);
+        }
+        return dp[n];
+    }
+}
