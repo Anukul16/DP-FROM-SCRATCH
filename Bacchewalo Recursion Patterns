@@ -1,0 +1,51 @@
+// To count the subsequence
+public class CountSubsequence {
+    public static int getSubsequence(int[]arr,int idx,int sum,int k){
+        if(idx>=arr.length){
+            if(sum==k)return 1;
+            else return 0;
+        }
+        int fromLeft=getSubsequence(arr, idx+1, sum+arr[idx], k);
+        int fromRight=getSubsequence(arr, idx+1, sum, k);
+        return fromLeft+fromRight;
+    }
+    public static void main(String[] args) {
+        int[]arr={1,2,2,3,4};
+        int k=6;
+        System.out.println(getSubsequence(arr,0,0,k));// Output: 4
+    }
+}
+
+
+
+
+
+
+// To print all the subsequences which is equal to sum
+
+import java.util.ArrayList;
+
+public class CountSubsequence {
+    public static void getSubsequence(int[]arr,int idx,int sum,int k,ArrayList<Integer>list){
+        if(idx>=arr.length){
+           if(sum==k){
+                for(int i=0;i<list.size();i++){
+                    System.out.print(list.get(i)+" ");
+                }
+                System.out.println();
+           }
+           return;
+        }
+        list.add(arr[idx]);
+        getSubsequence(arr, idx+1, sum+arr[idx], k,list);
+        list.remove(list.size()-1);
+        getSubsequence(arr, idx+1, sum, k,list);
+    }
+    public static void main(String[] args) {
+        int[]arr={1,2,2,3,4};
+        int k=6;
+        ArrayList<Integer>list=new ArrayList<>();
+        getSubsequence(arr, 0, 0, k, list);
+    }
+}
+
