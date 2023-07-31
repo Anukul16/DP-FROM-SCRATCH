@@ -49,3 +49,34 @@ public class CountSubsequence {
     }
 }
 
+
+
+
+
+
+
+
+// Is any subsequence present equal to sum with memo
+
+
+class Solution {
+    static Boolean[][]dp;
+  public static boolean checkSubsequenceSum(int N, int[] arr, int K) {
+    // code here
+        dp=new Boolean[N+1][K+1];
+        return check(arr,K,0,0);
+  }
+  public static boolean check(int[]arr,int k,int idx,int sum){
+      if(sum>k)return false;
+      if(idx>=arr.length){
+            if(sum==k)return true;
+            else return false;
+      }
+      if(dp[idx][sum] !=null) return dp[idx][sum];
+      if(check(arr,k,idx+1,sum+arr[idx])==true)return dp[idx][sum]= true;
+      if(check(arr,k,idx+1,sum)==true) return dp[idx][sum]= true;
+      
+      return dp[idx][sum]= false;
+  }
+}
+     
